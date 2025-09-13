@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: false,
       message: 'Communication test failed',
-      error: error.message
+      error: error instanceof Error ? error.message : 'Unknown error'
     }, { status: 500 });
   }
 }

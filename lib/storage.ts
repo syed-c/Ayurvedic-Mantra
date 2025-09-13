@@ -40,7 +40,7 @@ class PersistentStorage {
       await fs.mkdir(dataDir, { recursive: true });
       return true;
     } catch (error) {
-      console.warn('📂 Could not create data directory (serverless limitation):', error.message);
+      console.warn('📂 Could not create data directory (serverless limitation):', error instanceof Error ? error.message : 'Unknown error');
       return false;
     }
   }

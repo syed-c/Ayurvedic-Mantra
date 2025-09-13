@@ -2,6 +2,7 @@
 
 import { Leaf, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Youtube } from "lucide-react";
 import { useState, useEffect } from "react";
+import Link from "next/link";
 
 export function Footer() {
   const [settings, setSettings] = useState<any>(null);
@@ -69,7 +70,7 @@ export function Footer() {
           <div className="space-y-6">
             <h4 className="text-lg font-semibold font-poppins">Quick Links</h4>
             <nav className="space-y-3">
-              <a 
+              <Link 
                 href="/#benefits" 
                 onClick={(e) => {
                   if (window.location.pathname === '/') {
@@ -80,8 +81,8 @@ export function Footer() {
                 className="block text-sage-200 hover:text-white transition-colors"
               >
                 Benefits
-              </a>
-              <a 
+              </Link>
+              <Link 
                 href="/#pricing-plans" 
                 onClick={(e) => {
                   if (window.location.pathname === '/') {
@@ -92,8 +93,8 @@ export function Footer() {
                 className="block text-sage-200 hover:text-white transition-colors"
               >
                 Pricing Plans
-              </a>
-              <a 
+              </Link>
+              <Link 
                 href="/#testimonials" 
                 onClick={(e) => {
                   if (window.location.pathname === '/') {
@@ -104,8 +105,8 @@ export function Footer() {
                 className="block text-sage-200 hover:text-white transition-colors"
               >
                 Success Stories
-              </a>
-              <a 
+              </Link>
+              <Link 
                 href="/#faq" 
                 onClick={(e) => {
                   if (window.location.pathname === '/') {
@@ -116,7 +117,7 @@ export function Footer() {
                 className="block text-sage-200 hover:text-white transition-colors"
               >
                 FAQ
-              </a>
+              </Link>
             </nav>
           </div>
 

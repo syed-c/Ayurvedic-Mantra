@@ -270,7 +270,7 @@ export default function ThankYouPage() {
               <CardHeader>
                 <CardTitle className="text-sage-700 font-poppins flex items-center gap-2">
                   <Truck className="w-5 h-5" />
-                  What's Next?
+                  What&apos;s Next?
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -291,7 +291,7 @@ export default function ThankYouPage() {
                     </div>
                     <div>
                       <p className="font-medium text-sage-700">Order Processing</p>
-                      <p className="text-sm text-sage-600">We'll prepare your order within 24 hours</p>
+                      <p className="text-sm text-sage-600">We&apos;ll prepare your order within 24 hours</p>
                     </div>
                   </div>
 
@@ -301,7 +301,7 @@ export default function ThankYouPage() {
                     </div>
                     <div>
                       <p className="font-medium text-sage-700">Shipping Update</p>
-                      <p className="text-sm text-sage-600">You'll receive tracking details via SMS & email</p>
+                      <p className="text-sm text-sage-600">You&apos;ll receive tracking details via SMS & email</p>
                     </div>
                   </div>
 

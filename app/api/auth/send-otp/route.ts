@@ -22,8 +22,8 @@ export async function POST(request: NextRequest) {
 
     // Store OTP in a simple in-memory store (in production, use Redis or database)
     const otpKey = `otp_${formattedPhone}`;
-    global.otpStore = global.otpStore || new Map();
-    global.otpStore.set(otpKey, {
+    (global as any).otpStore = (global as any).otpStore || new Map();
+    (global as any).otpStore.set(otpKey, {
       otp,
       timestamp: Date.now(),
       phone: formattedPhone,
@@ -32,8 +32,8 @@ export async function POST(request: NextRequest) {
 
     // Set expiry (10 minutes)
     setTimeout(() => {
-      if (global.otpStore && global.otpStore.has(otpKey)) {
-        global.otpStore.delete(otpKey);
+      if ((global as any).otpStore && (global as any).otpStore.has(otpKey)) {
+        (global as any).otpStore.delete(otpKey);
         console.log('🗑️ OTP expired and removed for:', formattedPhone);
       }
     }, 10 * 60 * 1000);

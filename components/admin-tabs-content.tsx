@@ -134,14 +134,14 @@ export function AdminTabsContent({
 
   // Update testimonial
   const updateTestimonial = (id: number, field: string, value: any) => {
-    setTestimonials(testimonials.map(t => 
+    setTestimonials(testimonials.map((t: any) => 
       t.id === id ? { ...t, [field]: value } : t
     ));
   };
 
   // Delete testimonial
   const deleteTestimonial = (id: number) => {
-    setTestimonials(testimonials.filter(t => t.id !== id));
+    setTestimonials(testimonials.filter((t: any) => t.id !== id));
   };
 
   // Add new FAQ
@@ -157,19 +157,19 @@ export function AdminTabsContent({
 
   // Update FAQ
   const updateFaq = (id: number, field: string, value: any) => {
-    setFaqs(faqs.map(f => 
+    setFaqs(faqs.map((f: any) => 
       f.id === id ? { ...f, [field]: value } : f
     ));
   };
 
   // Delete FAQ
   const deleteFaq = (id: number) => {
-    setFaqs(faqs.filter(f => f.id !== id));
+    setFaqs(faqs.filter((f: any) => f.id !== id));
   };
 
   // Update pricing plan
   const updatePricingPlan = (id: number, field: string, value: any) => {
-    setPricingPlans(pricingPlans.map(p => 
+    setPricingPlans(pricingPlans.map((p: any) => 
       p.id === id ? { ...p, [field]: value, savings: field === 'mrp' || field === 'price' ? 
         (field === 'mrp' ? value - p.price : p.mrp - value) : p.savings } : p
     ));
@@ -316,7 +316,7 @@ export function AdminTabsContent({
           </CardHeader>
           <CardContent>
             <div className="grid md:grid-cols-3 gap-6">
-              {pricingPlans.map((plan) => (
+              {pricingPlans.map((plan: any) => (
                 <div key={plan.id} className="space-y-4 p-4 border border-sage-200 rounded-lg">
                   <div className="flex items-center justify-between">
                     <h4 className="font-semibold text-sage-700">{plan.name}</h4>
@@ -421,7 +421,7 @@ export function AdminTabsContent({
         </div>
 
         <div className="space-y-4">
-          {testimonials.map((testimonial) => (
+          {testimonials.map((testimonial: any) => (
             <Card key={testimonial.id} className="card-ayurveda">
               <CardContent className="p-6">
                 <div className="grid md:grid-cols-2 gap-6">

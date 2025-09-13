@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Get user session
-    const userSessions = global.userSessions || new Map();
+    const userSessions = (global as any).userSessions || new Map();
     const session = userSessions.get(token);
 
     if (!session) {

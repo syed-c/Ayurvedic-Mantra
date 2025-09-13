@@ -17,7 +17,7 @@ export async function GET() {
     console.error("❌ Internal settings GET failed:", error);
     return NextResponse.json({ 
       success: false, 
-      message: error.message 
+      message: error instanceof Error ? error.message : 'Unknown error'
     }, { status: 500 });
   }
 }
@@ -46,7 +46,7 @@ export async function PUT(request: NextRequest) {
     console.error("❌ Internal settings PUT failed:", error);
     return NextResponse.json({ 
       success: false, 
-      message: error.message 
+      message: error instanceof Error ? error.message : 'Unknown error'
     }, { status: 500 });
   }
 }
@@ -74,7 +74,7 @@ export async function POST(request: NextRequest) {
     console.error("❌ Internal settings POST failed:", error);
     return NextResponse.json({ 
       success: false, 
-      message: error.message 
+      message: error instanceof Error ? error.message : 'Unknown error'
     }, { status: 500 });
   }
 }

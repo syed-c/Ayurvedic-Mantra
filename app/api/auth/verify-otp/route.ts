@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
     
     // Check OTP from store
     const otpKey = `otp_${formattedContact}`;
-    const otpStore = global.otpStore || new Map();
+    const otpStore = (global as any).otpStore || new Map();
     const storedOtpData = otpStore.get(otpKey);
 
     if (!storedOtpData) {
@@ -106,13 +106,13 @@ export async function POST(request: NextRequest) {
     const userToken = `user_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 
     // Store user session
-    const userSessions = global.userSessions || new Map();
+    const userSessions = (global as any).userSessions || new Map();
     userSessions.set(userToken, {
       userId: user.id,
       contact: formattedContact,
       loginTime: new Date().toISOString()
     });
-    global.userSessions = userSessions;
+    (global as any).userSessions = userSessions;
 
     return NextResponse.json({
       success: true,
@@ -158,7 +158,7 @@ export async function GET(request: NextRequest) {
       }, { status: 401 });
     }
 
-    const userSessions = global.userSessions || new Map();
+    const userSessions = (global as any).userSessions || new Map();
     const session = userSessions.get(token);
 
     if (!session) {

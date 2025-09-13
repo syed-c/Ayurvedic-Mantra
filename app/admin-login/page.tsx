@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import Link from "next/link";
 import { 
   Shield, 
   Mail, 
@@ -346,9 +347,9 @@ export default function AdminLoginPage() {
 
         {/* Footer */}
         <div className="text-center mt-6">
-          <a href="/" className="text-sm text-red-600 hover:text-red-700">
+          <Link href="/" className="text-sm text-red-600 hover:text-red-700">
             ← Back to Website
-          </a>
+          </Link>
           <p className="text-xs text-red-500 mt-2">
             Unauthorized access attempts are logged and monitored
           </p>

@@ -51,7 +51,7 @@ Ayurvedic Mantra Team`
     console.error("❌ SMTP test failed:", error);
     return NextResponse.json({
       success: false,
-      message: "SMTP test failed: " + error.message
+      message: "SMTP test failed: " + (error instanceof Error ? error.message : 'Unknown error')
     }, { status: 500 });
   }
 }

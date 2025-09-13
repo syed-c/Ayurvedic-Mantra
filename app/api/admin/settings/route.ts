@@ -75,7 +75,7 @@ export async function PUT(request: NextRequest) {
     console.error("❌ Error updating settings:", error);
     return NextResponse.json({ 
       success: false, 
-      message: `Failed to save settings: ${error.message}` 
+      message: `Failed to save settings: ${error instanceof Error ? error.message : 'Unknown error'}` 
     }, { status: 500 });
   }
 }

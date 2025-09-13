@@ -133,7 +133,7 @@ export async function POST(request: NextRequest) {
     console.error("❌ Image upload failed:", error);
     return NextResponse.json({
       success: false,
-      message: `Upload failed: ${error.message}`
+      message: `Upload failed: ${error instanceof Error ? error.message : 'Unknown error'}`
     }, { status: 500 });
   }
 }

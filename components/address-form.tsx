@@ -314,7 +314,7 @@ export default function AddressForm({
           />
           {emailOptional && (
             <p className="text-xs text-sage-600">
-              If provided, you'll receive order confirmations and updates via email
+              If provided, you&apos;ll receive order confirmations and updates via email
             </p>
           )}
         </div>
