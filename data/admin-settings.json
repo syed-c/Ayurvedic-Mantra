@@ -1,0 +1,389 @@
+{
+  "site": {
+    "title": "Ayurvedic Mantra",
+    "logo": "/logo.png",
+    "headerText": "Transform Your Health Naturally",
+    "contactPhone": "+919897990779",
+    "contactEmail": "orders@ayurvedicmantra.com",
+    "socialLinks": {
+      "facebook": "https://facebook.com/ayurvedicmantra",
+      "instagram": "https://www.instagram.com/ayurvedic_mantra_wellness",
+      "twitter": "https://twitter.com/ayurvedicmantra"
+    }
+  },
+  "homepage": {
+    "heroTitle": "Lose Weight Naturally with Ayurvedic Mantra",
+    "heroSubtitle": "Transform your body with our clinically tested Ayurvedic weight loss formula. No side effects, just natural results that last.",
+    "heroImage": "/hero-product.jpg",
+    "benefitsSection": {
+      "title": "Why Choose SlimX Ayurvedic Formula?",
+      "benefits": [
+        {
+          "icon": "🌿",
+          "title": "100% Natural",
+          "description": "Made with pure Ayurvedic herbs"
+        },
+        {
+          "icon": "⚡",
+          "title": "Fast Results",
+          "description": "See changes in just 2 weeks"
+        },
+        {
+          "icon": "🛡️",
+          "title": "No Side Effects",
+          "description": "Safe for long-term use"
+        },
+        {
+          "icon": "🎯",
+          "title": "Targeted Fat Burn",
+          "description": "Burns stubborn belly fat"
+        }
+      ]
+    },
+    "testimonials": [
+      {
+        "id": 1,
+        "name": "Priya Sharma",
+        "location": "Mumbai",
+        "rating": 5,
+        "text": "Lost 8 kg in 2 months! Amazing results.",
+        "image": "/testimonial1.jpg",
+        "videoUrl": ""
+      }
+    ],
+    "faqs": [
+      {
+        "question": "How long does it take to see results?",
+        "answer": "Most customers see noticeable results within 2-3 weeks of regular use."
+      },
+      {
+        "question": "Are there any side effects?",
+        "answer": "SlimX is made from 100% natural Ayurvedic ingredients and has no known side effects when used as directed."
+      }
+    ]
+  },
+  "product": {
+    "name": "SlimX Ayurvedic Weight Loss Formula",
+    "tagline": "Natural Weight Loss Solution",
+    "description": "Clinically tested Ayurvedic formula for safe and effective weight loss",
+    "image": "/product-main.jpg",
+    "gallery": [
+      "/product1.jpg",
+      "/product2.jpg",
+      "/product3.jpg"
+    ],
+    "ingredients": [
+      "Black coffee extract",
+      "Green tea extract",
+      "Green seed extract",
+      "Garcinia Cambogia",
+      "Tulsi",
+      "Lemon dry extract",
+      "Dal Chini",
+      "Kali Mirch"
+    ],
+    "plans": [
+      {
+        "id": 1,
+        "name": "1 Month Supply",
+        "duration": "1 Month",
+        "price": 999,
+        "mrp": 1499,
+        "savings": 500,
+        "popular": false,
+        "description": "Perfect to get started",
+        "features": [
+          "1 bottle (60 capsules)",
+          "Basic meal plan",
+          "Email support",
+          "Free shipping"
+        ]
+      },
+      {
+        "id": 2,
+        "name": "2 Month Supply",
+        "duration": "2 Months",
+        "price": 1499,
+        "mrp": 2598,
+        "savings": 1099,
+        "popular": true,
+        "description": "Most popular choice",
+        "features": [
+          "2 bottles (120 capsules)",
+          "Detailed meal plan",
+          "Priority support",
+          "Progress tracking guide",
+          "Free shipping"
+        ]
+      },
+      {
+        "id": 3,
+        "name": "3 Month Supply",
+        "duration": "3 Months",
+        "price": 1799,
+        "mrp": 3897,
+        "savings": 2098,
+        "popular": false,
+        "bestValue": true,
+        "description": "Best value for complete transformation",
+        "features": [
+          "3 bottles (180 capsules)",
+          "Complete wellness program",
+          "Personal consultation call",
+          "Exercise routine guide",
+          "24/7 WhatsApp support",
+          "Free shipping + bonus gifts"
+        ]
+      }
+    ]
+  },
+  "checkout": {
+    "title": "Complete Your Order",
+    "subtitle": "Secure 256-bit SSL encrypted checkout",
+    "deliveryDays": 3,
+    "deliveryMessage": "Ships within 24 hours with free delivery",
+    "thankYouMessage": "Thank you for choosing Ayurvedic Mantra! Your natural transformation journey begins now.",
+    "supportMessage": "Need help? Contact us at +919897990779"
+  },
+  "communications": {
+    "sms": {
+      "enabled": true,
+      "provider": "infobip",
+      "apiKey": "42722043657b0c8bc9c75d13df7469f3-c238a19f-3c29-48d9-a969-ebaa38a4a868",
+      "senderId": "AyurMantra",
+      "template": "Your OTP is {otp}. Use this to verify your action on SlimX Mantra. Valid for 10 minutes.",
+      "baseUrl": "https://pez91m.api.infobip.com"
+    },
+    "email": {
+      "enabled": true,
+      "smtpHost": "smtp.titan.email",
+      "smtpPort": 465,
+      "smtpSecurity": "SSL",
+      "username": "orders@ayurvedicmantra.com",
+      "password": "aDIL@8899",
+      "fromName": "Ayurvedic Mantra",
+      "subject": "Your Login OTP - Ayurvedic Mantra",
+      "template": "Hi there!\n\nYour OTP for Ayurvedic Mantra is: {otp}\n\nThis OTP is valid for 10 minutes. Please do not share this code with anyone.\n\nBest regards,\nAyurvedic Mantra Team"
+    }
+  },
+  "payment": {
+    "gateway": "payu",
+    "merchantId": "",
+    "merchantKey": "",
+    "merchantSalt": "",
+    "testMode": true
+  },
+  "shipping": {
+    "shiprocket": {
+      "email": "crepact@gmail.com",
+      "password": "aDIL@8899",
+      "channelId": "7303784",
+      "enabled": true,
+      "testMode": false,
+      "updatedAt": "2025-09-13T08:15:37.889Z",
+      "configuredBy": "admin",
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjY5MzUwNDIsInNvdXJjZSI6InNyLWF1dGgtaW50IiwiZXhwIjoxNzU4NjE1MzM3LCJqdGkiOiJxazljYkZKZnB0eDJhME9SIiwiaWF0IjoxNzU3NzUxMzM3LCJpc3MiOiJodHRwczovL3NyLWF1dGguc2hpcHJvY2tldC5pbi9hdXRob3JpemUvdXNlciIsIm5iZiI6MTc1Nzc1MTMzNywiY2lkIjozNjg0Mzk1LCJ0YyI6MzYwLCJ2ZXJib3NlIjpmYWxzZSwidmVuZG9yX2lkIjowLCJ2ZW5kb3JfY29kZSI6Indvb2NvbW1lcmNlIn0.9vpeVlKVBjD3jEaxkC6bNmkzyNBuG4eGImy-yb678Nw",
+      "tokenExpiry": null,
+      "authenticated": true,
+      "autoRefreshEnabled": true,
+      "pickupLocation": "Office",
+      "packageDimensions": {
+        "length": 15,
+        "breadth": 5,
+        "height": 30,
+        "weight": 0.5
+      },
+      "authenticatedAt": "2025-09-13T08:15:38.175Z",
+      "pickupLocationId": 4017529,
+      "availablePickupLocations": [
+        {
+          "id": 4017529,
+          "pickup_location": "Office",
+          "address_type": null,
+          "address": "A8, Gulistan Housing Complex",
+          "address_2": "Near FM Tower, Anoopshahr Road",
+          "updated_address": false,
+          "old_address": "",
+          "old_address2": "",
+          "tag": "",
+          "tag_value": "",
+          "instruction": "",
+          "city": "Aligarh",
+          "state": "Uttar Pradesh",
+          "country": "India",
+          "pin_code": "202001",
+          "email": "info@ayurvedicmantra.com",
+          "is_first_mile_pickup": 0,
+          "phone": "9410834973",
+          "name": "Appoint Panda Inc",
+          "company_id": 3684395,
+          "gstin": null,
+          "vendor_name": null,
+          "status": 2,
+          "phone_verified": 1,
+          "lat": "27.943053191839",
+          "long": "78.083188281398",
+          "open_time": null,
+          "close_time": null,
+          "warehouse_code": null,
+          "alternate_phone": "8171545824",
+          "rto_address_id": 4017529,
+          "lat_long_status": 1,
+          "new": 1,
+          "associated_rto_address": null,
+          "is_primary_location": 1,
+          "send_pickup_rto_updates": false
+        }
+      ]
+    }
+  },
+  "media": {
+    "heroImages": [],
+    "productImages": [],
+    "testimonialImages": []
+  },
+  "version": "1.0",
+  "lastUpdated": "2025-09-13T08:15:38.175Z",
+  "orders": [
+    {
+      "id": "SM9094877774",
+      "userName": "rayyan syed",
+      "userEmail": "syedrayyan7117@gmail.com",
+      "userPhone": "9990558830",
+      "planName": "3 Month Supply",
+      "price": 1799,
+      "orderStatus": "confirmed",
+      "orderTime": "2025-09-12T14:38:29.487Z",
+      "isGuest": true,
+      "userId": null,
+      "shippingAddress": {
+        "name": "rayyan syed",
+        "address": "4/287 Nala Road Jamalpur",
+        "city": "Aligarh",
+        "state": "Uttar Pradesh",
+        "pincode": "202002",
+        "phone": "9990558830"
+      },
+      "paymentMethod": "online",
+      "paymentStatus": "pending",
+      "estimatedDelivery": 3,
+      "shiprocket": {
+        "orderId": 962968545,
+        "shipmentId": 959391217,
+        "awbCode": null,
+        "courierName": null,
+        "createdAt": "2025-09-12T14:38:30.161Z",
+        "status": "synchronized",
+        "response": {
+          "order_id": 962968545,
+          "channel_order_id": "SM9094877774",
+          "shipment_id": 959391217,
+          "status": "NEW",
+          "status_code": 1,
+          "onboarding_completed_now": 0,
+          "awb_code": "",
+          "courier_company_id": "",
+          "courier_name": "",
+          "new_channel": false,
+          "packaging_box_error": ""
+        },
+        "note": "Order created in Shiprocket without AWB/courier assignment"
+      },
+      "communicationSent": true,
+      "adminVisible": true,
+      "shiprocketSyncedAt": "2025-09-12T14:38:30.161Z",
+      "orderSource": "website",
+      "customerType": "guest",
+      "totalQuantity": 1,
+      "originalGuestEmail": "syedrayyan7117@gmail.com",
+      "originalGuestPhone": "9990558830",
+      "linkedToUserId": null,
+      "wasGuestOrder": true,
+      "updatedAt": "2025-09-12T14:38:29.487Z",
+      "statusHistory": [
+        {
+          "status": "placed",
+          "timestamp": "2025-09-12T14:38:29.487Z",
+          "note": "Order placed successfully"
+        }
+      ],
+      "shiprocketIntegrationType": "guest_checkout",
+      "shiprocketOrderId": 962968545,
+      "shiprocketShipmentId": 959391217,
+      "shiprocketAwbCode": null,
+      "shiprocketCourierName": null,
+      "shiprocketDashboardLink": "https://app.shiprocket.in/orders/962968545",
+      "shiprocketTrackingLink": null
+    },
+    {
+      "id": "SM9094877774",
+      "userName": "rayyan syed",
+      "userEmail": "syedrayyan7117@gmail.com",
+      "userPhone": "9990558830",
+      "planName": "3 Month Supply",
+      "price": 1799,
+      "orderStatus": "confirmed",
+      "orderTime": "2025-09-12T14:38:29.487Z",
+      "isGuest": true,
+      "userId": null,
+      "shippingAddress": {
+        "name": "rayyan syed",
+        "address": "4/287 Nala Road Jamalpur",
+        "city": "Aligarh",
+        "state": "Uttar Pradesh",
+        "pincode": "202002",
+        "phone": "9990558830"
+      },
+      "paymentMethod": "online",
+      "paymentStatus": "pending",
+      "estimatedDelivery": 3,
+      "shiprocket": {
+        "orderId": 962968545,
+        "shipmentId": 959391217,
+        "awbCode": null,
+        "courierName": null,
+        "createdAt": "2025-09-12T14:38:30.161Z",
+        "status": "synchronized",
+        "response": {
+          "order_id": 962968545,
+          "channel_order_id": "SM9094877774",
+          "shipment_id": 959391217,
+          "status": "NEW",
+          "status_code": 1,
+          "onboarding_completed_now": 0,
+          "awb_code": "",
+          "courier_company_id": "",
+          "courier_name": "",
+          "new_channel": false,
+          "packaging_box_error": ""
+        },
+        "note": "Order created in Shiprocket without AWB/courier assignment"
+      },
+      "communicationSent": true,
+      "adminVisible": true,
+      "shiprocketSyncedAt": "2025-09-12T14:38:30.161Z",
+      "orderSource": "website",
+      "customerType": "guest",
+      "totalQuantity": 1,
+      "originalGuestEmail": "syedrayyan7117@gmail.com",
+      "originalGuestPhone": "9990558830",
+      "linkedToUserId": null,
+      "wasGuestOrder": true,
+      "updatedAt": "2025-09-12T14:38:29.487Z",
+      "statusHistory": [
+        {
+          "status": "placed",
+          "timestamp": "2025-09-12T14:38:29.487Z",
+          "note": "Order placed successfully"
+        }
+      ],
+      "shiprocketIntegrationType": "guest_checkout",
+      "shiprocketOrderId": 962968545,
+      "shiprocketShipmentId": 959391217,
+      "shiprocketAwbCode": null,
+      "shiprocketCourierName": null,
+      "shiprocketDashboardLink": "https://app.shiprocket.in/orders/962968545",
+      "shiprocketTrackingLink": null
+    }
+  ]
+}
