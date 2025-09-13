@@ -83,6 +83,23 @@ export async function POST(request: NextRequest) {
         };
         break;
         
+      case 'logo':
+        updateData = {
+          site: {
+            logo: base64
+          },
+          media: {
+            logoImages: [{ 
+              filename, 
+              url: base64, 
+              uploadedAt: new Date().toISOString(),
+              size: file.size,
+              type: file.type
+            }]
+          }
+        };
+        break;
+        
       case 'testimonial':
         updateData = {
           media: {

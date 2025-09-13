@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -114,6 +114,46 @@ export function AdminTabsContent({
       }
     ]
   );
+
+  // Sync local state with settings prop changes
+  useEffect(() => {
+    if (settings) {
+      // Update SEO settings
+      setSeoSettings({
+        homepage: {
+          title: settings?.seo?.homepage?.title || "Ayurvedic Mantra - Natural Weight Loss",
+          description: settings?.seo?.homepage?.description || "Lose weight naturally with our Ayurvedic formula",
+          keywords: settings?.seo?.homepage?.keywords || "ayurvedic, weight loss, natural",
+          ogImage: settings?.seo?.homepage?.ogImage || ""
+        },
+        product: {
+          title: settings?.seo?.product?.title || "SlimX Mantra - Product Details",
+          description: settings?.seo?.product?.description || "Learn about our natural weight loss formula",
+          keywords: settings?.seo?.product?.keywords || "slimx, ayurvedic medicine, weight loss",
+          ogImage: settings?.seo?.product?.ogImage || ""
+        }
+      });
+
+      // Update pricing plans
+      if (settings?.product?.plans) {
+        setPricingPlans(settings.product.plans);
+      }
+
+      // Update testimonials
+      if (settings?.testimonials) {
+        setTestimonials(settings.testimonials);
+      } else if (settings?.homepage?.testimonials) {
+        setTestimonials(settings.homepage.testimonials);
+      }
+
+      // Update FAQs
+      if (settings?.faqs) {
+        setFaqs(settings.faqs);
+      } else if (settings?.homepage?.faqs) {
+        setFaqs(settings.homepage.faqs);
+      }
+    }
+  }, [settings]);
 
   // Add new testimonial
   const addTestimonial = () => {

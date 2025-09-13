@@ -96,6 +96,91 @@ export default function AdminDashboard() {
     description: "", 
     action: null as (() => void) | null 
   });
+
+  // Sync content settings with database settings
+  useEffect(() => {
+    if (settings) {
+      setContentSettings({
+        homepage: {
+          heroTitle: settings?.homepage?.heroTitle || "",
+          heroSubtitle: settings?.homepage?.heroSubtitle || "",
+          heroImage: settings?.homepage?.heroImage || settings?.product?.image || "",
+          benefitsTitle: settings?.homepage?.benefitsSection?.title || "",
+          benefitsEnabled: settings?.homepage?.benefitsSection?.enabled ?? true,
+          testimonialsEnabled: settings?.homepage?.testimonials?.enabled ?? true,
+          faqEnabled: settings?.homepage?.faq?.enabled ?? true,
+          pricingEnabled: settings?.homepage?.pricing?.enabled ?? true,
+          ctaText: settings?.homepage?.cta?.primary || "Order Now",
+          ctaSecondary: settings?.homepage?.cta?.secondary || "Learn More"
+        },
+        product: {
+          name: settings?.product?.name || "",
+          tagline: settings?.product?.tagline || "",
+          description: settings?.product?.description || "",
+          image: settings?.product?.image || "",
+          ingredients: settings?.product?.ingredients || "",
+          benefits: settings?.product?.benefits || "",
+          howToUse: settings?.product?.howToUse || "",
+          video: settings?.product?.video || ""
+        },
+        checkout: {
+          title: settings?.checkout?.title || "",
+          subtitle: settings?.checkout?.subtitle || "",
+          deliveryMessage: settings?.checkout?.deliveryMessage || "",
+          deliveryDays: settings?.checkout?.deliveryDays || 3,
+          securityMessage: settings?.checkout?.securityMessage || ""
+        },
+        thankYou: {
+          title: settings?.thankYou?.title || "",
+          subtitle: settings?.thankYou?.subtitle || "",
+          message: settings?.thankYou?.message || "",
+          supportEmail: settings?.thankYou?.supportEmail || "",
+          supportPhone: settings?.thankYou?.supportPhone || ""
+        }
+      });
+
+      // Sync website settings
+      setWebsiteSettings({
+        siteName: settings?.site?.title || "",
+        logo: settings?.site?.logo || "",
+        tagline: settings?.site?.tagline || "",
+        primaryColor: settings?.design?.colors?.primary || "#1f3b20",
+        secondaryColor: settings?.design?.colors?.secondary || "#D2691E",
+        accentColor: settings?.design?.colors?.accent || "#E6B800",
+        headerPhone: settings?.site?.contactPhone || "",
+        headerEmail: settings?.site?.contactEmail || "",
+        footerText: settings?.site?.footerText || "",
+        address: settings?.site?.address || "",
+        socialLinks: {
+          facebook: settings?.site?.socialLinks?.facebook || "",
+          instagram: settings?.site?.socialLinks?.instagram || "",
+          youtube: settings?.site?.socialLinks?.youtube || "",
+          whatsapp: settings?.site?.socialLinks?.whatsapp || ""
+        }
+      });
+
+      // Sync SEO settings
+      setSeoSettings({
+        homepage: {
+          title: settings?.seo?.homepage?.title || "",
+          description: settings?.seo?.homepage?.description || "",
+          keywords: settings?.seo?.homepage?.keywords || "",
+          ogImage: settings?.seo?.homepage?.ogImage || ""
+        },
+        product: {
+          title: settings?.seo?.product?.title || "",
+          description: settings?.seo?.product?.description || "",
+          keywords: settings?.seo?.product?.keywords || "",
+          ogImage: settings?.seo?.product?.ogImage || ""
+        },
+        checkout: {
+          title: settings?.seo?.checkout?.title || "",
+          description: settings?.seo?.checkout?.description || "",
+          keywords: settings?.seo?.checkout?.keywords || ""
+        }
+      });
+    }
+  }, [settings]);
   
   // Order filtering and management state
   const [filteredOrders, setFilteredOrders] = useState<any[]>([]);
@@ -2918,7 +3003,7 @@ export default function AdminDashboard() {
                       onChange={async (e) => {
                         const file = e.target.files?.[0];
                         if (file) {
-                          const url = await uploadImage(file, 'hero-banner');
+                          const url = await uploadImage(file, 'hero');
                           if (url) {
                             setContentSettings({
                               ...contentSettings,

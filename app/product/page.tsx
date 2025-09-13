@@ -35,7 +35,8 @@ export default function ProductPage() {
     "🏺", "📦", "🌿", "💊"
   ];
 
-  const plans = [
+  // Get pricing plans from database settings, with fallback to defaults
+  const plans = (settings?.product?.plans && Array.isArray(settings.product.plans)) ? settings.product.plans : [
     {
       id: 1,
       name: "1 Month Supply",
@@ -125,7 +126,7 @@ export default function ProductPage() {
   const handlePlanSelect = (planId: number) => {
     console.log(`Plan selected: ${planId}`);
     setSelectedPlan(planId);
-    const plan = plans.find(p => p.id === planId);
+    const plan = plans.find((p: any) => p.id === planId);
     
     toast({
       title: "Plan Selected! 🎉",
@@ -316,7 +317,7 @@ export default function ProductPage() {
           </div>
 
           <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-            {plans.map((plan) => (
+            {plans && plans.length > 0 ? plans.map((plan: any) => (
               <Card 
                 key={plan.id}
                 className={`relative transition-all duration-300 cursor-pointer ${
@@ -334,13 +335,13 @@ export default function ProductPage() {
                   </div>
                 )}
                 
-                {plan.bestSeller && (
+                {(plan.bestValue || plan.bestSeller) && (
                   <div className="absolute top-0 left-0 right-0 bg-turmeric-500 text-white text-center py-2 text-sm font-medium">
-                    ⭐ Best Seller - Save ₹{plan.savings}
+                    ⭐ Best Value - Save ₹{plan.savings}
                   </div>
                 )}
 
-                <CardContent className={`p-6 ${plan.popular || plan.bestSeller ? 'pt-12' : 'pt-6'}`}>
+                <CardContent className={`p-6 ${plan.popular || plan.bestValue || plan.bestSeller ? 'pt-12' : 'pt-6'}`}>
                   <div className="text-center space-y-4">
                     <h3 className="text-xl font-semibold font-poppins text-sage-700">
                       {plan.name}
@@ -376,7 +377,11 @@ export default function ProductPage() {
                   </div>
                 </CardContent>
               </Card>
-            ))}
+            )) : (
+              <div className="col-span-3 text-center py-8">
+                <p className="text-sage-600">Loading pricing plans...</p>
+              </div>
+            )}
           </div>
 
           {/* Action Buttons */}

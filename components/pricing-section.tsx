@@ -6,13 +6,16 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Check, Star, Truck, Shield } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useApp } from "@/contexts/AppContext";
 
 export function PricingSection() {
   console.log("Pricing Section rendered");
   const { toast } = useToast();
+  const { settings } = useApp();
   const [selectedPlan, setSelectedPlan] = useState<number | null>(null);
 
-  const plans = [
+  // Get pricing plans from database settings, with fallback to defaults
+  const plans = (settings?.product?.plans && Array.isArray(settings.product.plans) && settings.product.plans.length > 0) ? settings.product.plans : [
     {
       id: 1,
       name: "1 Month Supply",
@@ -67,6 +70,11 @@ export function PricingSection() {
     }
   ];
 
+  // Debug logging
+  console.log("Pricing Section - Settings:", settings);
+  console.log("Pricing Section - Plans:", plans);
+  console.log("Pricing Section - Plans length:", plans?.length);
+
   const handlePlanSelect = (planId: number) => {
     console.log(`Plan selected: ${planId}, redirecting to checkout`);
     // Redirect to checkout with selected plan
@@ -93,13 +101,13 @@ export function PricingSection() {
         </div>
 
         <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {plans.map((plan, index) => (
+          {plans && Array.isArray(plans) && plans.length > 0 ? plans.map((plan: any, index: number) => (
             <Card 
               key={plan.id}
               className={`relative overflow-hidden transition-all duration-300 hover:shadow-2xl group ${
                 plan.popular 
                   ? 'ring-2 ring-terracotta-400 shadow-xl scale-105' 
-                  : plan.bestValue 
+                  : (plan.bestValue || plan.bestSeller)
                   ? 'ring-2 ring-turmeric-400 shadow-xl'
                   : 'hover:shadow-xl hover:-translate-y-1'
               } ${selectedPlan === plan.id ? 'ring-2 ring-sage-400 bg-sage-50' : 'bg-white'}`}
@@ -111,13 +119,13 @@ export function PricingSection() {
                 </div>
               )}
               
-              {plan.bestValue && (
+              {(plan.bestValue || plan.bestSeller) && (
                 <div className="absolute top-0 left-0 right-0 bg-turmeric-500 text-white text-center py-2 text-sm font-medium">
                   ⭐ Best Value
                 </div>
               )}
 
-              <CardHeader className={`text-center pb-4 ${plan.popular || plan.bestValue ? 'pt-12' : 'pt-8'}`}>
+              <CardHeader className={`text-center pb-4 ${plan.popular || plan.bestValue || plan.bestSeller ? 'pt-12' : 'pt-8'}`}>
                 <CardTitle className="text-2xl font-poppins text-sage-700 mb-2">
                   {plan.name}
                 </CardTitle>
@@ -142,12 +150,17 @@ export function PricingSection() {
 
               <CardContent className="space-y-6">
                 <ul className="space-y-3">
-                  {plan.features.map((feature, idx) => (
+                  {plan.features && Array.isArray(plan.features) ? plan.features.map((feature: any, idx: number) => (
                     <li key={idx} className="flex items-start gap-3">
                       <Check className="w-5 h-5 text-sage-500 mt-0.5 flex-shrink-0" />
                       <span className="text-sage-600">{feature}</span>
                     </li>
-                  ))}
+                  )) : (
+                    <li className="flex items-start gap-3">
+                      <Check className="w-5 h-5 text-sage-500 mt-0.5 flex-shrink-0" />
+                      <span className="text-sage-600">Features loading...</span>
+                    </li>
+                  )}
                 </ul>
 
                 <div className="flex items-center justify-center gap-4 text-sm text-sage-500 pt-4 border-t border-sage-100">
@@ -176,7 +189,11 @@ export function PricingSection() {
                 </Button>
               </CardContent>
             </Card>
-          ))}
+          )) : (
+            <div className="col-span-3 text-center py-8">
+              <p className="text-sage-600">Loading pricing plans...</p>
+            </div>
+          )}
         </div>
 
         {/* Trust Indicators */}
