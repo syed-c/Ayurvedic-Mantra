@@ -18,7 +18,7 @@ import {
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
-const AUTHORIZED_ADMIN_EMAIL = "contact@syedrayyan.com";
+const AUTHORIZED_ADMIN_EMAIL = "orders@ayurvedicmantra.com";
 
 export default function AdminLoginPage() {
   console.log("🔐 SECURE Admin login page rendered");

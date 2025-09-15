@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 // SECURE: Only authorized admin email
-const AUTHORIZED_ADMIN_EMAIL = "contact@syedrayyan.com";
+const AUTHORIZED_ADMIN_EMAIL = "orders@ayurvedicmantra.com";
 
 // OTP storage with enhanced security
 let adminOtpStore: { [key: string]: { 

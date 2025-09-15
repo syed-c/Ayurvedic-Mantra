@@ -68,15 +68,15 @@
       "faqs": [
         {
           "id": 1,
-          "question": "Is this product safe? R",
           "answer": "Yes, completely natural and safe. R",
-          "enabled": true
+          "enabled": true,
+          "question": "Is this product safe? R"
         },
         {
           "id": 2,
-          "question": "sdfghj ",
           "answer": "sdfghjk",
-          "enabled": true
+          "enabled": true,
+          "question": "sdfghj "
         }
       ],
       "enabled": true
@@ -199,9 +199,9 @@
       "channelId": "7303784",
       "enabled": true,
       "testMode": false,
-      "updatedAt": "2025-09-15T10:14:03.943Z",
+      "updatedAt": "2025-09-15T11:10:37.717Z",
       "configuredBy": "admin",
-      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjY5MzUwNDIsInNvdXJjZSI6InNyLWF1dGgtaW50IiwiZXhwIjoxNzU4Nzk1MjQzLCJqdGkiOiJHNDBpaWdGU0d3T2U1OFBFIiwiaWF0IjoxNzU3OTMxMjQzLCJpc3MiOiJodHRwczovL3NyLWF1dGguc2hpcHJvY2tldC5pbi9hdXRob3JpemUvdXNlciIsIm5iZiI6MTc1NzkzMTI0MywiY2lkIjozNjg0Mzk1LCJ0YyI6MzYwLCJ2ZXJib3NlIjpmYWxzZSwidmVuZG9yX2lkIjowLCJ2ZW5kb3JfY29kZSI6Indvb2NvbW1lcmNlIn0.XZhgPNlg0EruovlfUPO0oOa47MqYgPENKdDhLaBDCzg",
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjY5MzUwNDIsInNvdXJjZSI6InNyLWF1dGgtaW50IiwiZXhwIjoxNzU4Nzk4NjM3LCJqdGkiOiJRTEo4ZDh5eDA5Q0dXUG5sIiwiaWF0IjoxNzU3OTM0NjM3LCJpc3MiOiJodHRwczovL3NyLWF1dGguc2hpcHJvY2tldC5pbi9hdXRob3JpemUvdXNlciIsIm5iZiI6MTc1NzkzNDYzNywiY2lkIjozNjg0Mzk1LCJ0YyI6MzYwLCJ2ZXJib3NlIjpmYWxzZSwidmVuZG9yX2lkIjowLCJ2ZW5kb3JfY29kZSI6Indvb2NvbW1lcmNlIn0.fRXJzqQCAKWfXj_-BohRBhEx-Xgb35otrfLxQHEMJxE",
       "tokenExpiry": null,
       "authenticated": true,
       "autoRefreshEnabled": true,
@@ -212,7 +212,7 @@
         "height": 30,
         "weight": 0.5
       },
-      "authenticatedAt": "2025-09-15T10:14:04.248Z",
+      "authenticatedAt": "2025-09-15T11:10:38.076Z",
       "pickupLocationId": 4017529,
       "availablePickupLocations": [
         {
@@ -262,5 +262,5 @@
     "testimonialImages": []
   },
   "version": "1.0",
-  "lastUpdated": "2025-09-15T10:14:04.248Z"
+  "lastUpdated": "2025-09-15T11:10:38.076Z"
 }

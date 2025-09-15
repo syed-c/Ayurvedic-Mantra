@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 // SECURITY: List of authorized admin emails (server-side validation)
-const AUTHORIZED_ADMIN_EMAILS = ["contact@syedrayyan.com"];
+const AUTHORIZED_ADMIN_EMAILS = ["orders@ayurvedicmantra.com"];
 
 // SECURITY: Protected admin routes
 const PROTECTED_ADMIN_ROUTES = ['/admin', '/admin-direct'];
