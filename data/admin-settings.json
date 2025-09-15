@@ -50,14 +50,14 @@
         {
           "id": 1,
           "name": "Priya Sharma R",
-          "location": "Mumbai R",
-          "rating": 5,
           "text": "Amazing results! Lost 18kg naturally. R",
           "image": "https://www.rogerebert.com/wp-content/uploads/2025/05/mountainheadre-jpg.webp",
           "video": "https://www.youtube.com/watch?v=pzNMWX7U0Mc&list=RDpzNMWX7U0Mc&start_radio=1&ab_channel=PuskarShreesh",
-          "beforeWeight": "78 kg",
+          "rating": 5,
+          "enabled": true,
+          "location": "Mumbai R",
           "afterWeight": "60 kg",
-          "enabled": true
+          "beforeWeight": "78 kg"
         }
       ],
       "enabled": true
@@ -67,12 +67,16 @@
       "description": "Find answers to common questions about Ayurvedic Mantra. Still have questions? Contact our support team anytime. R",
       "faqs": [
         {
-          "answer": "Most customers see noticeable results within 2-3 weeks of regular use.",
-          "question": "How long does it take to see results?"
+          "id": 1,
+          "question": "Is this product safe? R",
+          "answer": "Yes, completely natural and safe. R",
+          "enabled": true
         },
         {
-          "answer": "SlimX is made from 100% natural Ayurvedic ingredients and has no known side effects when used as directed.",
-          "question": "Are there any side effects?"
+          "id": 2,
+          "question": "sdfghj ",
+          "answer": "sdfghjk",
+          "enabled": true
         }
       ],
       "enabled": true
@@ -195,9 +199,9 @@
       "channelId": "7303784",
       "enabled": true,
       "testMode": false,
-      "updatedAt": "2025-09-15T09:52:54.508Z",
+      "updatedAt": "2025-09-15T10:14:03.943Z",
       "configuredBy": "admin",
-      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjY5MzUwNDIsInNvdXJjZSI6InNyLWF1dGgtaW50IiwiZXhwIjoxNzU4NzkzOTc0LCJqdGkiOiJuRTBPWktXRHpReE41Q3RqIiwiaWF0IjoxNzU3OTI5OTc0LCJpc3MiOiJodHRwczovL3NyLWF1dGguc2hpcHJvY2tldC5pbi9hdXRob3JpemUvdXNlciIsIm5iZiI6MTc1NzkyOTk3NCwiY2lkIjozNjg0Mzk1LCJ0YyI6MzYwLCJ2ZXJib3NlIjpmYWxzZSwidmVuZG9yX2lkIjowLCJ2ZW5kb3JfY29kZSI6Indvb2NvbW1lcmNlIn0.r-lDN_vuHtM5t9xdd2QIe0qfcNwuDmNVDAm_5gRWegQ",
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjY5MzUwNDIsInNvdXJjZSI6InNyLWF1dGgtaW50IiwiZXhwIjoxNzU4Nzk1MjQzLCJqdGkiOiJHNDBpaWdGU0d3T2U1OFBFIiwiaWF0IjoxNzU3OTMxMjQzLCJpc3MiOiJodHRwczovL3NyLWF1dGguc2hpcHJvY2tldC5pbi9hdXRob3JpemUvdXNlciIsIm5iZiI6MTc1NzkzMTI0MywiY2lkIjozNjg0Mzk1LCJ0YyI6MzYwLCJ2ZXJib3NlIjpmYWxzZSwidmVuZG9yX2lkIjowLCJ2ZW5kb3JfY29kZSI6Indvb2NvbW1lcmNlIn0.XZhgPNlg0EruovlfUPO0oOa47MqYgPENKdDhLaBDCzg",
       "tokenExpiry": null,
       "authenticated": true,
       "autoRefreshEnabled": true,
@@ -208,7 +212,7 @@
         "height": 30,
         "weight": 0.5
       },
-      "authenticatedAt": "2025-09-15T09:52:54.845Z",
+      "authenticatedAt": "2025-09-15T10:14:04.248Z",
       "pickupLocationId": 4017529,
       "availablePickupLocations": [
         {
@@ -258,5 +262,5 @@
     "testimonialImages": []
   },
   "version": "1.0",
-  "lastUpdated": "2025-09-15T09:52:54.846Z"
+  "lastUpdated": "2025-09-15T10:14:04.248Z"
 }

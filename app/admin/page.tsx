@@ -1656,6 +1656,111 @@ export default function AdminDashboard() {
                 </CardContent>
               </Card>
 
+              {/* FAQs Manager */}
+              <Card className="card-ayurveda" id="faqs-manager">
+                <CardHeader>
+                  <CardTitle className="text-sage-700 font-poppins">FAQs</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label className="text-sage-700">FAQ Title (H2)</Label>
+                      <Input
+                        value={contentSettings.homepage.faqTitle}
+                        onChange={(e) => setContentSettings({
+                          ...contentSettings,
+                          homepage: { ...contentSettings.homepage, faqTitle: e.target.value }
+                        })}
+                        className="border-sage-200 focus:border-sage-400"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-sage-700">FAQ Paragraph</Label>
+                      <Textarea
+                        value={contentSettings.homepage.faqDescription}
+                        onChange={(e) => setContentSettings({
+                          ...contentSettings,
+                          homepage: { ...contentSettings.homepage, faqDescription: e.target.value }
+                        })}
+                        className="border-sage-200 focus:border-sage-400"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-3">
+                    <Label className="text-sage-700">FAQ Items</Label>
+                    <div className="space-y-3">
+                      {faqs.map((faq, idx) => (
+                        <div key={faq.id} className="p-4 rounded border border-sage-200 space-y-2 relative">
+                          <div className="absolute right-2 top-2">
+                            <Button
+                              type="button"
+                              size="sm"
+                              variant="outline"
+                              className="border-sage-300"
+                              onClick={() => {
+                                const updated = [...faqs];
+                                updated.splice(idx, 1);
+                                setFaqs(updated);
+                              }}
+                            >Remove</Button>
+                          </div>
+                          <Input
+                            placeholder={`Question #${idx + 1}`}
+                            value={faq.question}
+                            onChange={(e) => {
+                              const updated = [...faqs];
+                              updated[idx].question = e.target.value;
+                              setFaqs(updated);
+                            }}
+                            className="border-sage-200 focus:border-sage-400"
+                          />
+                          <Textarea
+                            placeholder="Answer"
+                            value={faq.answer}
+                            onChange={(e) => {
+                              const updated = [...faqs];
+                              updated[idx].answer = e.target.value;
+                              setFaqs(updated);
+                            }}
+                            className="border-sage-200 focus:border-sage-400"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                    <div className="flex justify-end">
+                      <Button
+                        type="button"
+                        variant="outline"
+                        className="border-sage-300"
+                        onClick={() => setFaqs([...faqs, { id: faqs.length + 1, question: "", answer: "", enabled: true }])}
+                      >Add FAQ</Button>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-4">
+                    <Button
+                      onClick={() => saveSettings("FAQs", {
+                        homepage: {
+                          ...settings?.homepage,
+                          faqSection: {
+                            ...(settings?.homepage as any)?.faqSection,
+                            title: contentSettings.homepage.faqTitle,
+                            description: contentSettings.homepage.faqDescription,
+                            faqs
+                          }
+                        }
+                      })}
+                      className="btn-ayurveda"
+                      disabled={isSaving}
+                    >
+                      <Save className="w-4 h-4 mr-2" />
+                      {isSaving ? "Saving..." : "Save FAQs"}
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+
               {/* Recent Activity */}
               <Card className="card-ayurveda">
                 <CardHeader>

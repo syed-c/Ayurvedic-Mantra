@@ -76,9 +76,11 @@ export function TestimonialSection() {
   };
 
   const playVideo = (videoUrl: string, name: string) => {
-    console.log(`Playing video for ${name}: ${videoUrl}`);
-    // In a real implementation, this would open a video modal or redirect to the video
-    alert(`Playing ${name}'s success story video`);
+    if (!videoUrl) return;
+    try {
+      const url = videoUrl.startsWith('http') ? videoUrl : `https://${videoUrl}`;
+      window.open(url, '_blank', 'noopener,noreferrer');
+    } catch (_) {}
   };
 
   return (
@@ -111,19 +113,27 @@ export function TestimonialSection() {
                 {/* Video Thumbnail */}
                 <div className="relative">
                   <div className="aspect-video bg-gradient-to-br from-sage-200 to-terracotta-100 rounded-2xl flex items-center justify-center relative overflow-hidden">
-                    <div className="text-center space-y-4">
-                      <div className="text-6xl">
-                        {testimonials[currentSlide].image}
-                      </div>
-                      <Button
-                        onClick={() => playVideo((testimonials as any)[currentSlide].video || (testimonials as any)[currentSlide].videoUrl, (testimonials as any)[currentSlide].name)}
-                        className="bg-white/90 hover:bg-white text-sage-700 rounded-full w-16 h-16 p-0 shadow-lg"
-                      >
-                        <Play className="w-6 h-6 ml-1" />
-                      </Button>
-                    </div>
-                    
-                    {/* Play button overlay */}
+                    {(() => {
+                      const current: any = (testimonials as any)[currentSlide];
+                      const img: string = current?.image || '';
+                      const isUrl = typeof img === 'string' && (img.startsWith('http://') || img.startsWith('https://') || img.startsWith('/'));
+                      return isUrl ? (
+                        <img src={img} alt={current?.name || 'success story'} className="absolute inset-0 w-full h-full object-cover" />
+                      ) : (
+                        <div className="text-center space-y-4">
+                          <div className="text-6xl">{img || '🎥'}</div>
+                        </div>
+                      );
+                    })()}
+
+                    <Button
+                      onClick={() => playVideo((testimonials as any)[currentSlide].video || (testimonials as any)[currentSlide].videoUrl, (testimonials as any)[currentSlide].name)}
+                      className="bg-white/90 hover:bg-white text-sage-700 rounded-full w-16 h-16 p-0 shadow-lg relative z-10"
+                    >
+                      <Play className="w-6 h-6 ml-1" />
+                    </Button>
+
+                    {/* Hover hint */}
                     <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity cursor-pointer">
                       <div className="bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full text-white font-medium">
                         Watch Success Story
