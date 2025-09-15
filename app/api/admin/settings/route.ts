@@ -48,7 +48,7 @@ export async function PUT(request: NextRequest) {
       console.log("🚚 Saving Shiprocket settings...");
     }
 
-    // Update settings using singleton storage
+    // Update settings using singleton storage (throws if persistence fails)
     const updatedSettings = await storage.update(updates);
     
     // Determine appropriate success message
@@ -68,7 +68,7 @@ export async function PUT(request: NextRequest) {
       message: successMessage,
       data: updatedSettings,
       timestamp: new Date().toISOString(),
-      cached: true // Indicate this is using memory cache
+      cached: false
     });
 
   } catch (error) {

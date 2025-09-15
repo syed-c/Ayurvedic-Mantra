@@ -90,13 +90,15 @@ export function PricingSection() {
           </Badge>
           
           <h2 className="text-3xl md:text-5xl font-bold font-poppins text-sage-700">
-            Choose Your 
-            <span className="text-gradient-ayurveda"> Transformation</span> Plan
+            {settings?.homepage?.pricingSection?.title || (
+              <>Choose Your <span className="text-gradient-ayurveda"> Transformation</span> Plan</>
+            )}
           </h2>
           
           <p className="text-lg text-sage-600 max-w-2xl mx-auto leading-relaxed">
-            Start your natural weight loss journey today. All plans come with 
-            free shipping and a 30-day money-back guarantee.
+            {settings?.homepage?.pricingSection?.description || (
+              <>Start your natural weight loss journey today. All plans come with free shipping and a 30-day money-back guarantee.</>
+            )}
           </p>
         </div>
 

@@ -1,6 +1,7 @@
 // Enhanced persistent storage for serverless environments
 import { promises as fs } from 'fs';
 import { join } from 'path';
+import { supabase, supabaseService } from './supabase';
 
 export interface StorageData {
   site?: any;
@@ -54,6 +55,30 @@ class PersistentStorage {
         return this.cache;
       }
 
+      // Try to read from Supabase (if configured)
+      try {
+        const db = supabaseService || supabase;
+        if (db) {
+          const { data, error } = await db
+            .from('app_settings')
+            .select('data')
+            .eq('id', 'singleton')
+            .maybeSingle();
+          if (error) throw error;
+          if (data?.data) {
+            const merged = this.mergeWithDefaults(data.data);
+            this.cache = merged;
+            this.cacheTimeout = setTimeout(() => {
+              this.cache = null;
+            }, 10 * 60 * 1000);
+            console.log('✅ Settings loaded from Supabase');
+            return merged;
+          }
+        }
+      } catch (dbErr) {
+        console.warn('⚠️ Supabase settings load failed, falling back to file/defaults:', (dbErr as any)?.message);
+      }
+
       // Try to read from file first (if available)
       try {
         const data = await fs.readFile(this.dataPath, 'utf8');
@@ -97,18 +122,39 @@ class PersistentStorage {
       this.cache = dataWithMeta;
       console.log('✅ Settings cached in memory');
       
+      // Try to persist to Supabase if configured
+      let savedToSupabase = false;
+      try {
+        const db = supabaseService || supabase;
+        if (db) {
+          const { error } = await db
+            .from('app_settings')
+            .upsert({ id: 'singleton', data: dataWithMeta })
+            .select('id')
+            .single();
+          if (error) throw error;
+          savedToSupabase = true;
+          console.log('✅ Settings saved to Supabase');
+        }
+      } catch (dbErr) {
+        console.warn('⚠️ Supabase settings save failed, will rely on file/memory:', (dbErr as any)?.message);
+      }
+
       // Try to save to file (if possible)
+      let savedToFile = false;
       try {
         const canCreateDir = await this.ensureDataDir();
         if (canCreateDir) {
           await fs.writeFile(this.dataPath, JSON.stringify(dataWithMeta, null, 2));
+          savedToFile = true;
           console.log('✅ Settings saved to file storage');
         }
       } catch (fileError) {
         console.log('⚠️ File save failed (serverless limitation), using memory cache only');
       }
       
-      return true;
+      // Only report success if at least one durable target succeeded
+      return savedToSupabase || savedToFile;
       
     } catch (error) {
       console.error('❌ Failed to save settings:', error);
@@ -134,9 +180,29 @@ class PersistentStorage {
     };
 
     const merged = deepMerge(current, updates);
-    await this.save(merged);
+    const ok = await this.save(merged);
+    if (!ok) {
+      throw new Error('Failed to persist settings to Supabase or file storage');
+    }
     
     return merged;
+  }
+
+  // Merge incoming with defaults to ensure all keys present
+  private mergeWithDefaults(input: any): StorageData {
+    const defaults = this.getDefaultSettings();
+    const deepMerge = (target: any, source: any): any => {
+      const result = { ...target };
+      for (const key in source) {
+        if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {
+          result[key] = deepMerge(target[key] || {}, source[key]);
+        } else {
+          result[key] = source[key];
+        }
+      }
+      return result;
+    };
+    return deepMerge(defaults, input);
   }
 
   // Get default settings structure
@@ -155,39 +221,64 @@ class PersistentStorage {
         }
       },
       homepage: {
+        // 1 & 2
         heroTitle: "Lose Weight Naturally with Ayurvedic Mantra",
         heroSubtitle: "Transform your body with our clinically tested Ayurvedic weight loss formula. No side effects, just natural results that last.",
         heroImage: "/hero-product.jpg",
+
+        // 3,4,5
         benefitsSection: {
           title: "Why Choose SlimX Ayurvedic Formula?",
-          benefits: [
-            { icon: "🌿", title: "100% Natural", description: "Made with pure Ayurvedic herbs" },
-            { icon: "⚡", title: "Fast Results", description: "See changes in just 2 weeks" },
-            { icon: "🛡️", title: "No Side Effects", description: "Safe for long-term use" },
-            { icon: "🎯", title: "Targeted Fat Burn", description: "Burns stubborn belly fat" }
+          description: "Experience the power of ancient Ayurvedic wisdom combined with modern science for sustainable and healthy weight loss.",
+          infoBoxes: [
+            { title: "100% Natural", description: "Made with pure Ayurvedic herbs" },
+            { title: "Fast Results", description: "See changes in just 2 weeks" },
+            { title: "No Side Effects", description: "Safe for long-term use" },
+            { title: "Targeted Fat Burn", description: "Burns stubborn belly fat" }
           ]
         },
-        testimonials: [
-          {
-            id: 1,
-            name: "Priya Sharma",
-            location: "Mumbai",
-            rating: 5,
-            text: "Lost 8 kg in 2 months! Amazing results.",
-            image: "/testimonial1.jpg",
-            videoUrl: ""
-          }
-        ],
-        faqs: [
-          {
-            question: "How long does it take to see results?",
-            answer: "Most customers see noticeable results within 2-3 weeks of regular use."
-          },
-          {
-            question: "Are there any side effects?",
-            answer: "SlimX is made from 100% natural Ayurvedic ingredients and has no known side effects when used as directed."
-          }
-        ]
+
+        // 6,7
+        pricingSection: {
+          title: "Choose Your Transformation Plan",
+          description: "Start your natural weight loss journey today. All plans come with free shipping and a 30-day money-back guarantee."
+        },
+
+        // 8,9,10,11
+        testimonialsSection: {
+          title: "Real People, Real Results",
+          description: "Don't just take our word for it. Watch real transformation stories from thousands of satisfied customers across India.",
+          items: [
+            {
+              id: 1,
+              name: "Priya Sharma",
+              age: 32,
+              location: "Mumbai",
+              rating: 5,
+              text: "I lost 18 kg in 3 months! This is the only product that actually worked for me. No side effects, just pure natural goodness.",
+              beforeWeight: "78 kg",
+              afterWeight: "60 kg",
+              videoUrl: "",
+              image: "👩‍🦱"
+            }
+          ]
+        },
+
+        // 12,13,14
+        faqSection: {
+          title: "Frequently Asked Questions",
+          description: "Find answers to common questions about Ayurvedic Mantra. Still have questions? Contact our support team anytime.",
+          faqs: [
+            {
+              question: "How long does it take to see results?",
+              answer: "Most customers see noticeable results within 2-3 weeks of regular use."
+            },
+            {
+              question: "Are there any side effects?",
+              answer: "SlimX is made from 100% natural Ayurvedic ingredients and has no known side effects when used as directed."
+            }
+          ]
+        }
       },
       product: {
         name: "SlimX Ayurvedic Weight Loss Formula",

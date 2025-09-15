@@ -276,6 +276,56 @@ This guide should give new contributors and operators the context and steps need
 - Users API (`app/api/admin/users/route.ts`) now fetches/creates users via Supabase `users` table.
 - Orders API (`app/api/orders/place/route.ts`) now inserts/fetches orders via Supabase `orders` table, with file storage fallback if DB is down.
 
+### Settings storage (homepage/product/seo/checkout)
+
+- Source of truth is Supabase table `app_settings` with a single row id `singleton`.
+- The storage adapter in `lib/storage.ts` now reads/writes to Supabase first, with file fallback to `data/admin-settings.json`, and in-memory cache for 10 minutes.
+- Admin saves use `AppContext.updateSettings` which calls `app/api/internal/settings` → `lib/storage.update`.
+
+SQL (run in Supabase SQL Editor):
+```
+create extension if not exists "pgcrypto";
+
+create table if not exists public.app_settings (
+  id text primary key default 'singleton',
+  data jsonb not null,
+  updated_at timestamp with time zone not null default now()
+);
+
+-- seed with defaults (optional)
+insert into public.app_settings (id, data)
+values ('singleton', '{}')
+on conflict (id) do nothing;
+```
+
+Required env (already listed above): `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`.
+
+### Editable Homepage Sections in Admin
+
+- Editor: `app/admin/page.tsx` → Content tab → Homepage Content.
+- Added fields covering all sections requested:
+  - Hero: H1, description.
+  - Benefits: H2, paragraph, 4 info boxes (H3 + paragraph), visibility toggle.
+  - Pricing: H2, paragraph, visibility toggle.
+  - Success Stories: H2, paragraph, visibility toggle.
+  - FAQ: H2, paragraph, visibility toggle.
+- Saving writes to `homepage` with keys:
+  - `benefitsSection: { title, description, infoBoxes[], enabled }`
+  - `pricingSection: { title, description, enabled }`
+  - `testimonialsSection: { title, description, enabled }`
+  - `faqSection: { title, description, enabled }`
+
+### Frontend consumption
+
+- `components/benefits-section.tsx` now reads `homepage.benefitsSection.title/description/infoBoxes`.
+- `components/pricing-section.tsx` reads `homepage.pricingSection.title/description`.
+- `components/testimonial-section.tsx` reads `homepage.testimonialsSection.{title,description,items}` with fallback.
+- `components/faq-section.tsx` reads `homepage.faqSection.{title,description,faqs}` with fallback.
+
+Notes:
+- All components keep sensible defaults if fields are missing.
+- Admin saves continue to work without Supabase; data will persist in file or memory when DB is unavailable.
+
 SQL (run in Supabase SQL Editor):
 ```
 -- Optional: ensure pgcrypto for gen_random_uuid()

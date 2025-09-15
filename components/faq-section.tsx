@@ -7,11 +7,15 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
+import { useApp } from "@/contexts/AppContext";
 
 export function FAQSection() {
   console.log("FAQ Section rendered");
+  const { settings } = useApp();
 
-  const faqs = [
+  const faqs = (settings?.homepage?.faqSection?.faqs && settings.homepage.faqSection.faqs.length > 0)
+    ? settings.homepage.faqSection.faqs
+    : [
     {
       question: "Is Ayurvedic Mantra safe to use?",
       answer: "Yes, absolutely. Our formula is 100% natural and made from pure Ayurvedic herbs that have been used safely for centuries. All ingredients are FDA approved and the product is manufactured in GMP certified facilities. We have zero reports of serious side effects from thousands of customers."
@@ -63,19 +67,21 @@ export function FAQSection() {
           </Badge>
           
           <h2 className="text-3xl md:text-5xl font-bold font-poppins text-sage-700">
-            Frequently Asked
-            <span className="text-gradient-ayurveda"> Questions</span>
+            {settings?.homepage?.faqSection?.title || (
+              <>Frequently Asked<span className="text-gradient-ayurveda"> Questions</span></>
+            )}
           </h2>
           
           <p className="text-lg text-sage-600 max-w-2xl mx-auto leading-relaxed">
-            Find answers to common questions about Ayurvedic Mantra. 
-            Still have questions? Contact our support team anytime.
+            {settings?.homepage?.faqSection?.description || (
+              <>Find answers to common questions about Ayurvedic Mantra. Still have questions? Contact our support team anytime.</>
+            )}
           </p>
         </div>
 
         <div className="max-w-4xl mx-auto">
           <Accordion type="single" collapsible className="space-y-4">
-            {faqs.map((faq, index) => (
+            {faqs.map((faq: any, index: number) => (
               <AccordionItem 
                 key={index} 
                 value={`item-${index}`}

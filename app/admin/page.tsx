@@ -106,10 +106,24 @@ export default function AdminDashboard() {
           heroSubtitle: settings?.homepage?.heroSubtitle || "",
           heroImage: settings?.homepage?.heroImage || settings?.product?.image || "",
           benefitsTitle: settings?.homepage?.benefitsSection?.title || "",
+          benefitsDescription: settings?.homepage?.benefitsSection?.description || "",
+          infoBoxes: settings?.homepage?.benefitsSection?.infoBoxes || [
+            { title: "", description: "" },
+            { title: "", description: "" },
+            { title: "", description: "" },
+            { title: "", description: "" }
+          ],
+          pricingTitle: settings?.homepage?.pricingSection?.title || settings?.homepage?.pricing?.title || "",
+          pricingDescription: settings?.homepage?.pricingSection?.description || settings?.homepage?.pricing?.description || "",
+          testimonialsTitle: settings?.homepage?.testimonialsSection?.title || "",
+          testimonialsDescription: settings?.homepage?.testimonialsSection?.description || "",
+          reviews: settings?.homepage?.testimonialsSection?.items || settings?.homepage?.testimonials || [],
+          faqTitle: settings?.homepage?.faqSection?.title || "",
+          faqDescription: settings?.homepage?.faqSection?.description || "",
           benefitsEnabled: settings?.homepage?.benefitsSection?.enabled ?? true,
-          testimonialsEnabled: settings?.homepage?.testimonials?.enabled ?? true,
-          faqEnabled: settings?.homepage?.faq?.enabled ?? true,
-          pricingEnabled: settings?.homepage?.pricing?.enabled ?? true,
+          testimonialsEnabled: (settings?.homepage as any)?.testimonialsSection?.enabled ?? (settings?.homepage as any)?.testimonials?.enabled ?? true,
+          faqEnabled: (settings?.homepage as any)?.faqSection?.enabled ?? (settings?.homepage as any)?.faq?.enabled ?? true,
+          pricingEnabled: (settings?.homepage as any)?.pricingSection?.enabled ?? (settings?.homepage as any)?.pricing?.enabled ?? true,
           ctaText: settings?.homepage?.cta?.primary || "Order Now",
           ctaSecondary: settings?.homepage?.cta?.secondary || "Learn More"
         },
@@ -245,6 +259,20 @@ export default function AdminDashboard() {
       heroSubtitle: "",
       heroImage: "",
       benefitsTitle: "",
+      benefitsDescription: "",
+      infoBoxes: [
+        { title: "", description: "" },
+        { title: "", description: "" },
+        { title: "", description: "" },
+        { title: "", description: "" }
+      ],
+      pricingTitle: "",
+      pricingDescription: "",
+      testimonialsTitle: "",
+      testimonialsDescription: "",
+      reviews: [],
+      faqTitle: "",
+      faqDescription: "",
       benefitsEnabled: true,
       testimonialsEnabled: true,
       faqEnabled: true,
@@ -309,7 +337,13 @@ export default function AdminDashboard() {
       price: 999,
       mrp: 1499,
       duration: "1 Month",
-      enabled: true
+      enabled: true,
+      features: [
+        "1 bottle (60 capsules)",
+        "Basic meal plan",
+        "Email support",
+        "Free shipping"
+      ]
     },
     {
       id: 2,
@@ -318,7 +352,14 @@ export default function AdminDashboard() {
       mrp: 2598,
       duration: "2 Months",
       popular: true,
-      enabled: true
+      enabled: true,
+      features: [
+        "2 bottles (120 capsules)",
+        "Detailed meal plan",
+        "Priority support",
+        "Progress tracking guide",
+        "Free shipping"
+      ]
     },
     {
       id: 3,
@@ -327,7 +368,15 @@ export default function AdminDashboard() {
       mrp: 3897,
       duration: "3 Months", 
       bestValue: true,
-      enabled: true
+      enabled: true,
+      features: [
+        "3 bottles (180 capsules)",
+        "Complete wellness program",
+        "Consultation call",
+        "Exercise routine guide",
+        "24/7 WhatsApp support",
+        "Free shipping + bonus gifts"
+      ]
     }
   ]);
 
@@ -750,10 +799,24 @@ export default function AdminDashboard() {
           heroSubtitle: settings.homepage?.heroSubtitle || "Transform your body with our clinically tested formula",
           heroImage: settings.homepage?.heroImage || "",
           benefitsTitle: settings.homepage?.benefitsSection?.title || "Why Choose Our Formula?",
+          benefitsDescription: settings.homepage?.benefitsSection?.description || "",
+          infoBoxes: settings.homepage?.benefitsSection?.infoBoxes || [
+            { title: "", description: "" },
+            { title: "", description: "" },
+            { title: "", description: "" },
+            { title: "", description: "" }
+          ],
+          pricingTitle: settings.homepage?.pricingSection?.title || settings.homepage?.pricing?.title || "",
+          pricingDescription: settings.homepage?.pricingSection?.description || settings.homepage?.pricing?.description || "",
+          testimonialsTitle: settings.homepage?.testimonialsSection?.title || "",
+          testimonialsDescription: settings.homepage?.testimonialsSection?.description || "",
+          reviews: settings.homepage?.testimonialsSection?.items || settings.homepage?.testimonials || [],
+          faqTitle: settings.homepage?.faqSection?.title || "",
+          faqDescription: settings.homepage?.faqSection?.description || "",
           benefitsEnabled: settings.homepage?.benefitsSection?.enabled ?? true,
-          testimonialsEnabled: settings.homepage?.testimonials?.enabled ?? true,
-          faqEnabled: settings.homepage?.faq?.enabled ?? true,
-          pricingEnabled: settings.homepage?.pricing?.enabled ?? true,
+          testimonialsEnabled: (settings.homepage as any)?.testimonialsSection?.enabled ?? (settings.homepage as any)?.testimonials?.enabled ?? true,
+          faqEnabled: (settings.homepage as any)?.faqSection?.enabled ?? (settings.homepage as any)?.faq?.enabled ?? true,
+          pricingEnabled: (settings.homepage as any)?.pricingSection?.enabled ?? (settings.homepage as any)?.pricing?.enabled ?? true,
           ctaText: settings.homepage?.cta?.primary || "Order Now",
           ctaSecondary: settings.homepage?.cta?.secondary || "Learn More"
         },
@@ -1501,7 +1564,7 @@ export default function AdminDashboard() {
         {/* Main Admin Content with Improved Navigation */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           <div className="bg-white rounded-xl p-2 shadow-sm border border-sage-200">
-            <TabsList className="grid w-full grid-cols-3 lg:grid-cols-6 bg-transparent gap-2">
+            <TabsList className="grid w-full grid-cols-3 lg:grid-cols-8 bg-transparent gap-2">
               <TabsTrigger 
                 value="overview" 
                 className="flex items-center gap-2 text-sm font-medium data-[state=active]:bg-sage-100 data-[state=active]:text-sage-800 data-[state=active]:shadow-sm rounded-lg px-3 py-2"
@@ -1532,11 +1595,25 @@ export default function AdminDashboard() {
                 <span className="hidden sm:inline">Website</span>
               </TabsTrigger>
               <TabsTrigger 
+                value="content" 
+                className="flex items-center gap-2 text-sm font-medium data-[state=active]:bg-sage-100 data-[state=active]:text-sage-800 data-[state=active]:shadow-sm rounded-lg px-3 py-2"
+              >
+                <Edit className="w-4 h-4" />
+                <span className="hidden sm:inline">Content</span>
+              </TabsTrigger>
+              <TabsTrigger 
                 value="pricing" 
                 className="flex items-center gap-2 text-sm font-medium data-[state=active]:bg-orange-100 data-[state=active]:text-orange-800 data-[state=active]:shadow-sm rounded-lg px-3 py-2"
               >
                 <DollarSign className="w-4 h-4" />
                 <span className="hidden sm:inline">Pricing</span>
+              </TabsTrigger>
+              <TabsTrigger 
+                value="testimonials" 
+                className="flex items-center gap-2 text-sm font-medium data-[state=active]:bg-turmeric-100 data-[state=active]:text-turmeric-900 data-[state=active]:shadow-sm rounded-lg px-3 py-2"
+              >
+                <Star className="w-4 h-4" />
+                <span className="hidden sm:inline">Testimonials</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="settings" 
@@ -1976,13 +2053,170 @@ export default function AdminDashboard() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="benefits-title" className="text-sage-700">Benefits Section Title</Label>
+                    <Label htmlFor="benefits-title" className="text-sage-700">Benefits Section Title (H2)</Label>
                     <Input
                       id="benefits-title"
                       value={contentSettings.homepage.benefitsTitle}
                       onChange={(e) => setContentSettings({
                         ...contentSettings,
                         homepage: {...contentSettings.homepage, benefitsTitle: e.target.value}
+                      })}
+                      className="border-sage-200 focus:border-sage-400"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="benefits-desc" className="text-sage-700">Benefits Paragraph</Label>
+                    <Textarea
+                      id="benefits-desc"
+                      value={contentSettings.homepage.benefitsDescription}
+                      onChange={(e) => setContentSettings({
+                        ...contentSettings,
+                        homepage: {...contentSettings.homepage, benefitsDescription: e.target.value}
+                      })}
+                      className="border-sage-200 focus:border-sage-400"
+                    />
+                  </div>
+
+                  <div className="space-y-3">
+                    <Label className="text-sage-700">Info Boxes (H3 + Paragraph)</Label>
+                    <div className="grid md:grid-cols-2 gap-4">
+                      {contentSettings.homepage.infoBoxes.map((box: any, idx: number) => (
+                        <div key={idx} className="space-y-2 p-3 rounded border border-sage-200 relative">
+                          <div className="absolute right-2 top-2 flex gap-2">
+                            <Button
+                              type="button"
+                              size="sm"
+                              variant="outline"
+                              className="border-sage-300"
+                              onClick={() => {
+                                const next = [...contentSettings.homepage.infoBoxes];
+                                next.splice(idx, 1);
+                                setContentSettings({
+                                  ...contentSettings,
+                                  homepage: { ...contentSettings.homepage, infoBoxes: next }
+                                });
+                              }}
+                            >Remove</Button>
+                          </div>
+                          <Input
+                            placeholder={`Box ${idx + 1} Title`}
+                            value={box.title}
+                            onChange={(e) => {
+                              const next = [...contentSettings.homepage.infoBoxes];
+                              next[idx] = { ...next[idx], title: e.target.value };
+                              setContentSettings({
+                                ...contentSettings,
+                                homepage: { ...contentSettings.homepage, infoBoxes: next }
+                              });
+                            }}
+                            className="border-sage-200 focus:border-sage-400"
+                          />
+                          <Textarea
+                            placeholder={`Box ${idx + 1} Paragraph`}
+                            value={box.description}
+                            onChange={(e) => {
+                              const next = [...contentSettings.homepage.infoBoxes];
+                              next[idx] = { ...next[idx], description: e.target.value };
+                              setContentSettings({
+                                ...contentSettings,
+                                homepage: { ...contentSettings.homepage, infoBoxes: next }
+                              });
+                            }}
+                            className="border-sage-200 focus:border-sage-400"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                    <div className="flex justify-end">
+                      <Button
+                        type="button"
+                        variant="outline"
+                        className="border-sage-300"
+                        onClick={() => {
+                          setContentSettings({
+                            ...contentSettings,
+                            homepage: {
+                              ...contentSettings.homepage,
+                              infoBoxes: [
+                                ...contentSettings.homepage.infoBoxes,
+                                { title: "", description: "" }
+                              ]
+                            }
+                          });
+                        }}
+                      >Add Info Box</Button>
+                    </div>
+                  </div>
+
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label className="text-sage-700">Pricing Section Title (H2)</Label>
+                      <Input
+                        value={contentSettings.homepage.pricingTitle}
+                        onChange={(e) => setContentSettings({
+                          ...contentSettings,
+                          homepage: { ...contentSettings.homepage, pricingTitle: e.target.value }
+                        })}
+                        className="border-sage-200 focus:border-sage-400"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-sage-700">Pricing Paragraph</Label>
+                      <Textarea
+                        value={contentSettings.homepage.pricingDescription}
+                        onChange={(e) => setContentSettings({
+                          ...contentSettings,
+                          homepage: { ...contentSettings.homepage, pricingDescription: e.target.value }
+                        })}
+                        className="border-sage-200 focus:border-sage-400"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label className="text-sage-700">Success Stories Title (H2)</Label>
+                      <Input
+                        value={contentSettings.homepage.testimonialsTitle}
+                        onChange={(e) => setContentSettings({
+                          ...contentSettings,
+                          homepage: { ...contentSettings.homepage, testimonialsTitle: e.target.value }
+                        })}
+                        className="border-sage-200 focus:border-sage-400"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-sage-700">Success Stories Paragraph</Label>
+                      <Textarea
+                        value={contentSettings.homepage.testimonialsDescription}
+                        onChange={(e) => setContentSettings({
+                          ...contentSettings,
+                          homepage: { ...contentSettings.homepage, testimonialsDescription: e.target.value }
+                        })}
+                        className="border-sage-200 focus:border-sage-400"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label className="text-sage-700">FAQ Title (H2)</Label>
+                    <Input
+                      value={contentSettings.homepage.faqTitle}
+                      onChange={(e) => setContentSettings({
+                        ...contentSettings,
+                        homepage: { ...contentSettings.homepage, faqTitle: e.target.value }
+                      })}
+                      className="border-sage-200 focus:border-sage-400"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label className="text-sage-700">FAQ Paragraph</Label>
+                    <Textarea
+                      value={contentSettings.homepage.faqDescription}
+                      onChange={(e) => setContentSettings({
+                        ...contentSettings,
+                        homepage: { ...contentSettings.homepage, faqDescription: e.target.value }
                       })}
                       className="border-sage-200 focus:border-sage-400"
                     />
@@ -2075,11 +2309,25 @@ export default function AdminDashboard() {
                         heroSubtitle: contentSettings.homepage.heroSubtitle,
                         benefitsSection: {
                           title: contentSettings.homepage.benefitsTitle,
+                          description: contentSettings.homepage.benefitsDescription,
+                          infoBoxes: contentSettings.homepage.infoBoxes,
                           enabled: contentSettings.homepage.benefitsEnabled
                         },
-                        testimonials: { enabled: contentSettings.homepage.testimonialsEnabled },
-                        faq: { enabled: contentSettings.homepage.faqEnabled },
-                        pricing: { enabled: contentSettings.homepage.pricingEnabled },
+                        pricingSection: {
+                          title: contentSettings.homepage.pricingTitle,
+                          description: contentSettings.homepage.pricingDescription,
+                          enabled: contentSettings.homepage.pricingEnabled
+                        },
+                        testimonialsSection: {
+                          title: contentSettings.homepage.testimonialsTitle,
+                          description: contentSettings.homepage.testimonialsDescription,
+                          enabled: contentSettings.homepage.testimonialsEnabled
+                        },
+                        faqSection: {
+                          title: contentSettings.homepage.faqTitle,
+                          description: contentSettings.homepage.faqDescription,
+                          enabled: contentSettings.homepage.faqEnabled
+                        },
                         cta: {
                           primary: contentSettings.homepage.ctaText,
                           secondary: contentSettings.homepage.ctaSecondary
@@ -2783,6 +3031,54 @@ export default function AdminDashboard() {
                         <Label className="text-sage-700">Mark as Best Value</Label>
                       </div>
                     </div>
+
+                    {/* Plan Features CRUD */}
+                    <div className="space-y-2">
+                      <Label className="text-sage-700">Plan Features</Label>
+                      <div className="space-y-2">
+                        {(plan.features || []).map((f: string, fIdx: number) => (
+                          <div key={fIdx} className="flex gap-2">
+                            <Input
+                              value={f}
+                              onChange={(e) => {
+                                const updated = [...pricingPlans];
+                                const features = Array.isArray(updated[index].features) ? [...updated[index].features] : [];
+                                features[fIdx] = e.target.value;
+                                updated[index].features = features;
+                                setPricingPlans(updated);
+                              }}
+                              className="border-sage-200 focus:border-sage-400"
+                            />
+                            <Button
+                              type="button"
+                              variant="outline"
+                              className="border-sage-300"
+                              onClick={() => {
+                                const updated = [...pricingPlans];
+                                const features = Array.isArray(updated[index].features) ? [...updated[index].features] : [];
+                                features.splice(fIdx, 1);
+                                updated[index].features = features;
+                                setPricingPlans(updated);
+                              }}
+                            >Remove</Button>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="flex justify-end">
+                        <Button
+                          type="button"
+                          variant="outline"
+                          className="border-sage-300"
+                          onClick={() => {
+                            const updated = [...pricingPlans];
+                            const features = Array.isArray(updated[index].features) ? [...updated[index].features] : [];
+                            features.push("");
+                            updated[index].features = features;
+                            setPricingPlans(updated);
+                          }}
+                        >Add Feature</Button>
+                      </div>
+                    </div>
                   </div>
                 ))}
 
@@ -2965,6 +3261,23 @@ export default function AdminDashboard() {
                   >
                     <Plus className="w-4 h-4 mr-2" />
                     Add New Testimonial
+                  </Button>
+
+                  <Button 
+                    onClick={() => saveSettings("Testimonials", {
+                      homepage: {
+                        ...settings?.homepage,
+                        testimonialsSection: {
+                          ...(settings?.homepage as any)?.testimonialsSection,
+                          items: testimonials
+                        }
+                      }
+                    })}
+                    className="btn-ayurveda"
+                    disabled={isSaving}
+                  >
+                    <Save className="w-4 h-4 mr-2" />
+                    {isSaving ? "Saving..." : "Save Reviews"}
                   </Button>
 
                   <Button 

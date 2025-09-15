@@ -9,44 +9,52 @@ export function BenefitsSection() {
   console.log("Benefits Section rendered");
   const { settings } = useApp();
 
-  const benefits = [
-    {
-      icon: <Flame className="w-8 h-8" />,
-      title: "Burns Fat Naturally",
-      description: "Accelerates metabolism and targets stubborn fat deposits using ancient Ayurvedic herbs.",
-      color: "terracotta"
-    },
-    {
-      icon: <Heart className="w-8 h-8" />,
-      title: "No Side Effects",
-      description: "100% natural ingredients with zero harmful chemicals or synthetic compounds.",
-      color: "sage"
-    },
-    {
-      icon: <Zap className="w-8 h-8" />,
-      title: "Boosts Energy",
-      description: "Increases vitality and stamina while supporting your weight loss journey.",
-      color: "turmeric"
-    },
-    {
-      icon: <Leaf className="w-8 h-8" />,
-      title: "Detoxifies Body",
-      description: "Cleanses toxins and improves digestive health for better nutrient absorption.",
-      color: "sage"
-    },
-    {
-      icon: <Shield className="w-8 h-8" />,
-      title: "Clinically Tested",
-      description: "Scientifically proven formula backed by modern research and traditional wisdom.",
-      color: "terracotta"
-    },
-    {
-      icon: <Clock className="w-8 h-8" />,
-      title: "Long-lasting Results",
-      description: "Sustainable weight management that helps maintain your ideal body weight.",
-      color: "turmeric"
-    }
-  ];
+  const dynamicBoxes = settings?.homepage?.benefitsSection?.infoBoxes;
+  const benefits = Array.isArray(dynamicBoxes) && dynamicBoxes.length > 0
+    ? dynamicBoxes.map((b: any, idx: number) => ({
+        icon: [<Flame className="w-8 h-8" />, <Heart className="w-8 h-8" />, <Zap className="w-8 h-8" />, <Leaf className="w-8 h-8" />, <Shield className="w-8 h-8" />, <Clock className="w-8 h-8" />][idx % 6],
+        title: b.title,
+        description: b.description,
+        color: ["terracotta","sage","turmeric","sage","terracotta","turmeric"][idx % 6]
+      }))
+    : [
+      {
+        icon: <Flame className="w-8 h-8" />,
+        title: "Burns Fat Naturally",
+        description: "Accelerates metabolism and targets stubborn fat deposits using ancient Ayurvedic herbs.",
+        color: "terracotta"
+      },
+      {
+        icon: <Heart className="w-8 h-8" />,
+        title: "No Side Effects",
+        description: "100% natural ingredients with zero harmful chemicals or synthetic compounds.",
+        color: "sage"
+      },
+      {
+        icon: <Zap className="w-8 h-8" />,
+        title: "Boosts Energy",
+        description: "Increases vitality and stamina while supporting your weight loss journey.",
+        color: "turmeric"
+      },
+      {
+        icon: <Leaf className="w-8 h-8" />,
+        title: "Detoxifies Body",
+        description: "Cleanses toxins and improves digestive health for better nutrient absorption.",
+        color: "sage"
+      },
+      {
+        icon: <Shield className="w-8 h-8" />,
+        title: "Clinically Tested",
+        description: "Scientifically proven formula backed by modern research and traditional wisdom.",
+        color: "terracotta"
+      },
+      {
+        icon: <Clock className="w-8 h-8" />,
+        title: "Long-lasting Results",
+        description: "Sustainable weight management that helps maintain your ideal body weight.",
+        color: "turmeric"
+      }
+    ];
 
   const getColorClasses = (color: string) => {
     switch(color) {
@@ -89,8 +97,9 @@ export function BenefitsSection() {
           </h2>
           
           <p className="text-lg text-sage-600 max-w-2xl mx-auto leading-relaxed">
-            Experience the power of ancient Ayurvedic wisdom combined with modern science 
-            for sustainable and healthy weight loss.
+            {settings?.homepage?.benefitsSection?.description || (
+              <>Experience the power of ancient Ayurvedic wisdom combined with modern science for sustainable and healthy weight loss.</>
+            )}
           </p>
         </div>
 

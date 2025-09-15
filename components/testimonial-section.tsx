@@ -5,12 +5,16 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Star, Play, Quote, ChevronLeft, ChevronRight } from "lucide-react";
+import { useApp } from "@/contexts/AppContext";
 
 export function TestimonialSection() {
   console.log("Testimonial Section rendered");
+  const { settings } = useApp();
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  const testimonials = [
+  const testimonials = (settings?.homepage?.testimonialsSection?.items && settings.homepage.testimonialsSection.items.length > 0)
+    ? settings.homepage.testimonialsSection.items
+    : [
     {
       id: 1,
       name: "Priya Sharma",
@@ -86,13 +90,15 @@ export function TestimonialSection() {
           </Badge>
           
           <h2 className="text-3xl md:text-5xl font-bold font-poppins text-sage-700">
-            Real People,
-            <span className="text-gradient-ayurveda"> Real Results</span>
+            {settings?.homepage?.testimonialsSection?.title || (
+              <>Real People,<span className="text-gradient-ayurveda"> Real Results</span></>
+            )}
           </h2>
           
           <p className="text-lg text-sage-600 max-w-2xl mx-auto leading-relaxed">
-            Don't just take our word for it. Watch real transformation stories 
-            from thousands of satisfied customers across India.
+            {settings?.homepage?.testimonialsSection?.description || (
+              <>Don't just take our word for it. Watch real transformation stories from thousands of satisfied customers across India.</>
+            )}
           </p>
         </div>
 
@@ -110,7 +116,7 @@ export function TestimonialSection() {
                         {testimonials[currentSlide].image}
                       </div>
                       <Button
-                        onClick={() => playVideo(testimonials[currentSlide].videoUrl, testimonials[currentSlide].name)}
+                        onClick={() => playVideo((testimonials as any)[currentSlide].video || (testimonials as any)[currentSlide].videoUrl, (testimonials as any)[currentSlide].name)}
                         className="bg-white/90 hover:bg-white text-sage-700 rounded-full w-16 h-16 p-0 shadow-lg"
                       >
                         <Play className="w-6 h-6 ml-1" />
@@ -184,7 +190,7 @@ export function TestimonialSection() {
 
           {/* Dots Indicator */}
           <div className="flex justify-center gap-2 mt-6">
-            {testimonials.map((_, index) => (
+            {testimonials.map((_: any, index: number) => (
               <button
                 key={index}
                 onClick={() => setCurrentSlide(index)}
@@ -198,7 +204,7 @@ export function TestimonialSection() {
 
         {/* Text Testimonials Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {testimonials.slice(0, 3).map((testimonial, index) => (
+          {testimonials.slice(0, 3).map((testimonial: any, index: number) => (
             <Card key={testimonial.id} className="card-ayurveda">
               <CardContent className="p-6 space-y-4">
                 <div className="flex items-center gap-1">
