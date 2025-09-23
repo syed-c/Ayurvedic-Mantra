@@ -77,13 +77,26 @@ Security note: Do not commit secrets. Replace any credentials present in `data/a
   - `X-Frame-Options=DENY`, `X-Content-Type-Options=nosniff`, `Referrer-Policy=strict-origin-when-cross-origin`, `X-XSS-Protection`, `Permissions-Policy`, `Strict-Transport-Security`
 - Adds CSP for admin routes; `frame-ancestors 'none'`
 
+Session bootstrap improvements (2025-09):
+- Admin middleware now accepts a one-time `adminToken` passed via URL query (`/admin?adminToken=...` or `?token=...`).
+  - When present and valid, middleware sets an HttpOnly cookie `adminToken` and redirects to the clean `/admin` URL.
+  - Purpose: reliably establish session even when initial `Set-Cookie` is blocked by environment/client.
+- Admin login pages (`app/admin-login/page.tsx` and `app/admin-login/secure-page.tsx`) now redirect to `/admin?adminToken=<token>` after OTP success.
+- Login pages also write a non-HttpOnly fallback cookie on the client to cover strict environments.
+ - If an authenticated admin reaches `/dashboard`, middleware automatically redirects them to `/admin`.
+
 Admin Authentication:
 - OTP-based flow via `app/api/auth/*` routes and `app/admin-login`
-- On success, frontend stores `adminToken` locally; middleware also expects cookie or bearer when hitting API
+- On success, frontend stores `adminToken` locally AND redirects with `?adminToken=` so middleware can set the cookie; middleware accepts cookie or bearer for admin APIs
 
 Recommendation:
 - Issue `adminToken` as HttpOnly, Secure cookie from the server-side login route to avoid relying on localStorage and reduce XSS risk
 - Rotate any public demo credentials
+
+Operational tips for session issues:
+- Ensure same-origin (protocol, domain, port) between login and admin routes.
+- In development, avoid third-party iframes that can block cookies.
+- If you see a brief admin flash and redirect to `/login`, check that you are not being sent to `/dashboard` by any UI; the user dashboard will redirect unauthenticated users to `/login`.
 
 ### 6) Communications (Email/SMS/OTP)
 - Centralized in `lib/communications.ts`

@@ -77,6 +77,15 @@ export default function DashboardPage() {
   useEffect(() => {
     const loadUserData = async () => {
       try {
+        // If an admin session exists, don't send admins to user login/dashboard logic
+        const adminLocalToken = typeof window !== 'undefined' ? localStorage.getItem('adminToken') : null;
+        const adminCookieToken = typeof document !== 'undefined' ? document.cookie.split('; ').some(c => c.startsWith('adminToken=')) : false;
+        if (adminLocalToken || adminCookieToken) {
+          console.log("Admin session detected on user dashboard, redirecting to /admin");
+          window.location.replace('/admin');
+          return;
+        }
+
         const userData = getStoredUser();
         const token = getUserToken();
         

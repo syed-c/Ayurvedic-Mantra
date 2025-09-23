@@ -11,10 +11,36 @@ export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   console.log(`🔒 SECURE Middleware: ${pathname}`);
   
+  // If admin is authenticated but lands on customer dashboard, redirect to admin dashboard
+  if (pathname.startsWith('/dashboard')) {
+    const adminToken = request.cookies.get('adminToken')?.value;
+    if (adminToken && adminToken.startsWith('admin_')) {
+      console.log('ℹ️ Admin session detected on /dashboard, redirecting to /admin');
+      return NextResponse.redirect(new URL('/admin', request.url));
+    }
+  }
+
   // SECURITY: Admin routes protection with enhanced validation
   if (PROTECTED_ADMIN_ROUTES.some(route => pathname.startsWith(route)) && pathname !== '/admin-login') {
     const isPrefetch = request.headers.get('x-middleware-prefetch') === '1' || request.headers.get('purpose') === 'prefetch';
-    const adminToken = request.cookies.get('adminToken')?.value;
+    let adminToken = request.cookies.get('adminToken')?.value;
+    const url = request.nextUrl;
+    const urlToken = url.searchParams.get('adminToken') || url.searchParams.get('token');
+    
+    // Allow bootstrap via URL token once, then set cookie and clean URL
+    if (!adminToken && urlToken) {
+      const parts = urlToken.split('_');
+      if (parts.length >= 3 && parts[0] === 'admin') {
+        const response = NextResponse.redirect(new URL(url.pathname, request.url));
+        response.cookies.set('adminToken', urlToken, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === 'production',
+          sameSite: 'lax',
+          maxAge: 8 * 60 * 60
+        });
+        return response;
+      }
+    }
     
     console.log("🔐 Admin route access attempt:");
     console.log("- Path:", pathname);

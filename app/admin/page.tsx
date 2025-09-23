@@ -65,25 +65,51 @@ export default function AdminDashboard() {
   console.log("Admin dashboard rendered");
   const { toast } = useToast();
   
-  // Client-side admin access verification (accept either cookie or localStorage token)
+  // Client-side admin access verification with URL-token bootstrap and retry
   useEffect(() => {
-    const localToken = typeof window !== 'undefined' ? localStorage.getItem('adminToken') : null;
-    const hasCookieToken = typeof document !== 'undefined' ? document.cookie.split('; ').some(c => c.startsWith('adminToken=')) : false;
+    let tries = 0;
 
-    console.log("Checking admin session:", {
-      hasLocalToken: !!localToken,
-      hasCookieToken,
-      url: typeof window !== 'undefined' ? window.location.pathname : ''
-    });
+    const bootstrapFromUrl = () => {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const urlToken = params.get('adminToken') || params.get('token');
+        if (urlToken && urlToken.startsWith('admin_')) {
+          // Persist token for middleware and client checks
+          localStorage.setItem('adminToken', urlToken);
+          document.cookie = `adminToken=${urlToken}; path=/; max-age=${8 * 60 * 60}; SameSite=Lax`;
+          // Clean URL without query
+          window.history.replaceState({}, '', window.location.pathname);
+          console.log('🔐 Admin token bootstrapped from URL');
+        }
+      } catch {}
+    };
 
-    if (!localToken && !hasCookieToken) {
-      console.log("❌ No admin session found, redirecting to login");
-      // Use replace to avoid loop back-navigation and add small delay to avoid hydration race
-      setTimeout(() => { window.location.replace("/admin-login"); }, 50);
-      return;
-    }
+    const checkSession = () => {
+      const localToken = typeof window !== 'undefined' ? localStorage.getItem('adminToken') : null;
+      const hasCookieToken = typeof document !== 'undefined' ? document.cookie.split('; ').some(c => c.startsWith('adminToken=')) : false;
 
-    console.log("✅ Admin session verified, dashboard ready");
+      console.log("Checking admin session:", {
+        hasLocalToken: !!localToken,
+        hasCookieToken,
+        url: typeof window !== 'undefined' ? window.location.pathname : ''
+      });
+
+      if (!localToken && !hasCookieToken) {
+        if (tries < 10) {
+          tries += 1;
+          setTimeout(checkSession, 150);
+          return;
+        }
+        console.log("❌ No admin session found after retries, redirecting to login");
+        setTimeout(() => { window.location.replace("/admin-login"); }, 50);
+        return;
+      }
+
+      console.log("✅ Admin session verified, dashboard ready");
+    };
+
+    bootstrapFromUrl();
+    setTimeout(checkSession, 100);
   }, []);
 
   const { settings, stats, users, orders, loading, refreshData, updateSettings } = useApp();

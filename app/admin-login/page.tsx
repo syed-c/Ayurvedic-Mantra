@@ -80,6 +80,7 @@ export default function AdminLoginPage() {
       const response = await fetch('/api/auth/secure-login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify({
           contact: emailForm.email,
           contactType: 'email',
@@ -131,6 +132,7 @@ export default function AdminLoginPage() {
       const response = await fetch('/api/auth/secure-login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify({
           contact: emailForm.email,
           contactType: 'email',
@@ -146,6 +148,10 @@ export default function AdminLoginPage() {
         // Store admin session securely
         localStorage.setItem('adminToken', result.data.token);
         localStorage.setItem('adminData', JSON.stringify(result.data.admin));
+        // Ensure middleware can see the session immediately
+        try {
+          document.cookie = `adminToken=${result.data.token}; path=/; max-age=${8 * 60 * 60}; SameSite=Lax`;
+        } catch {}
         
         console.log("✅ SECURE Admin session stored successfully");
         
@@ -154,11 +160,12 @@ export default function AdminLoginPage() {
           description: "Authentication successful. Redirecting to dashboard...",
         });
 
-        // Redirect to admin panel
+        // Redirect to admin panel with token as query for middleware bootstrap fallback
         setTimeout(() => {
           console.log("🔄 Redirecting to secure admin dashboard");
-          window.location.replace("/admin");
-        }, 1000);
+          const token = encodeURIComponent(result.data.token);
+          window.location.replace(`/admin?adminToken=${token}`);
+        }, 500);
 
       } else {
         toast({
